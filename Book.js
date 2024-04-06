@@ -12,6 +12,10 @@ const bookSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true
+    },
+    booktype: {
+        type: String,
+        required: true
     }
 });
 

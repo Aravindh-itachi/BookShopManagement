@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookshop Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+    <p class="title">Aravindh Bookshop</p>
+    <form id="addBookForm">
+        <input type="text" name="title" id="title" placeholder="Title" required>
+        <input type="text" name="author" id="author" placeholder="Author" required>
+        <input type="number" name="price" id="price" placeholder="Price" required>
+        <select id="bookType">
+            <option value="fiction">Fiction</option>
+            <option value="non-fiction">Non-Fiction</option>
+            <option value="biography">Biography</option>
+            <option value="physics">Physics</option>
+            <option value="accountancy">Accountancy</option>
+            <option value="mathematics">Mathematics</option>
+            <option value="novel">Novel</option>
+            <option value="programming in Html">Programming in Html</option>
+            <option value="javascript">Javascript</option>
+            <option value="css">CSS</option>
+            <option value="gst">GST</option>
+            <option value="income tax">Income tax</option>
+            <option value="banking">Banking</option>
+            
+          </select>
+        <button type="submit">Add Book</button>
+    </form>
+    
+    <div id="booksContainer"><button type="showbook" >Display Books</button></div>
+    <div id="invoicesContainer"></div>
+</div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

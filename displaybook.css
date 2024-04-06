@@ -1,0 +1,12 @@
+.container {
+    display: grid;
+    grid-template-columns: 20% 20% 20%;
+    grid-auto-rows: 1.6em;
+    grid-gap: 10px;
+    height: 100px;
+}
+.cards-content{
+    background-color: blueviolet;
+    height: 100px;
+    padding: 50px;
+}

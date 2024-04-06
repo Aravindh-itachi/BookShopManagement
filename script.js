@@ -1,45 +1,55 @@
+
 document.getElementById('addBookForm').addEventListener('submit', addBook);
-  
+document.getElementById('booksContainer').addEventListener('showbook', displayBooks);
+
+
+
 async function addBook(event) {
     event.preventDefault();
-    
- 
     const title = document.getElementById('title').value;
     const author = document.getElementById('author').value;
     const price = document.getElementById('price').value;
-     console.log(title);
+    var booktype = document.getElementById("bookType").value;
+
     try {
-       
-        const response = await fetch('/api/books', {
-            method: 'POST',
-            crossDomain: true,
+        const response = await axios.post('http://localhost:3000/api/books', {
+            title,
+            author,
+            price,
+            booktype
+        }, {
             headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ title, author, price })
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            }
         });
-        
-        const data = await response.json();
-        console.log('Book added:', data);
-        displayBooks(); // Refresh books list
+
+        console.log('Book added:', response.data);
+        // displayBooks(); // Refresh books list
     } catch (error) {
         console.error('Error:', error);
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    displayBooks();
-    displayInvoices();
-});
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     displayBooks();
+//     displayInvoices();
+// });
 
 async function displayBooks() {
     const booksContainer = document.getElementById('booksContainer');
     booksContainer.innerHTML = ''; // Clear previous content
 
     try {
-        const response = await fetch('/api/books');
+        const response = await axios.post('http://localhost:3000/api/displayBooks', {
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            }
+        });
         const books = await response.json();
-
+        console.log(books);
         books.forEach(book => {
             const bookElement = document.createElement('div');
             bookElement.innerHTML = `
@@ -57,13 +67,13 @@ async function displayBooks() {
 
 async function purchaseBook(bookId) {
     try {
-        const response = await fetch(`/api/books/${bookId}/purchase`, {
+        const response = await fetch(`http://localhost:3000/api/books/${bookId}/purchase`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             }
         });
-        
+
         const data = await response.json();
         console.log('Book purchased:', data);
         displayBooks(); // Refresh books list
@@ -78,7 +88,7 @@ async function displayInvoices() {
     invoicesContainer.innerHTML = ''; // Clear previous content
 
     try {
-        const response = await fetch('/api/invoices');
+        const response = await fetch('http://localhost:3000/api/invoices');
         const invoices = await response.json();
 
         invoices.forEach(invoice => {

@@ -1,22 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookshop Management System</title>
-    <link rel="stylesheet" href="style.css">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Bookshop Management System</title>
+   <link rel="stylesheet" href="addbook.css">
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
+
 <body>
-    <h1>Welcome to Bookshop Management System</h1>
-    <form id="addBookForm">
-        <input type="text" id="title" placeholder="Title" required>
-        <input type="text" id="author" placeholder="Author" required>
-        <input type="number" id="price" placeholder="Price" required>
-        <button type="submit">Add Book</button>
-    </form>
-    <div id="booksContainer"></div>
-    <div id="invoicesContainer"></div>
-    
-    <script src="script.js"></script>
+   <div class="container">
+      <form id="addBookForm">
+         <div class="form-row">
+            <div class="input-data">
+               <input type="text" name="title" id="title" required>
+               <div class="underline"></div>
+               <label for="">Book Title</label>
+            </div>
+            <div class="input-data">
+               <input type="text" name="author" id="author" required>
+               <div class="underline"></div>
+               <label for="">Author</label>
+            </div>
+         </div>
+         <div class="form-row">
+            <div class="input-data">
+               <input type="number" name="price" id="price" required>
+               <div class="underline"></div>
+               <label for="">Price</label>
+            </div>
+            <div class="input-data">
+               <select id="bookType" class="classic">
+                  <option value="fiction">Fiction</option>
+                  <option value="non-fiction">Non-Fiction</option>
+                  <option value="biography">Biography</option>
+                  <option value="physics">Physics</option>
+                  <option value="accountancy">Accountancy</option>
+                  <option value="mathematics">Mathematics</option>
+                  <option value="novel">Novel</option>
+                  <option value="programming">programming</option>
+                  <option value="javascript">Javascript</option>
+                  <option value="css">CSS</option>
+                  <option value="gst">GST</option>
+                  <option value="income tax">Income tax</option>
+                  <option value="banking">Banking</option>
+
+               </select>
+               <div class="underline"></div>
+            </div>
+         </div>
+         <br />
+         <div class="underline"></div>
+         <br />
+         <div class="form-row submit-btn">
+            <div class="input-data">
+               <div class="inner"></div>
+               <input type="submit" value="Add Book">
+            </div>
+            <div class="input-data">
+               <div class="inner"></div>
+               <a href="/displaybook.html"><input  value="Display Books"></a>
+            </div>
+         </div>
+      </form>
+   </div>
+
+   <script src="script.js"></script>
 </body>
+
 </html>

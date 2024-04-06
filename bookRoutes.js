@@ -3,11 +3,14 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const path = require('path'); // Import path module
 const Book = require('./Book.js');
-const Invoice = require('./invoice.js');
+const Invoice = require('./Invoice.js');
+const mongo = require('./database.js')
+
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static(__dirname));
 
 // Set the correct view engine for rendering HTML files
@@ -15,24 +18,42 @@ app.engine('html', require('ejs').renderFile);
 
 app.set('view engine', 'html');
 
+
 app.get('/', (req, res) => {
-    // Use path.join() to construct the path to index.html
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'addbook.html'));
 });
 
 
+
 // Add a book
+
 router.post('/api/books', async (req, res) => {
-    console.log(req.body);
+    console.log(req.body, "req.body");
     try {
-        const { title, author, price } = req.body;
-        const book = new Book({ title, author, price });
+        const { title, author, price ,booktype } = req.body;
+        const book = new Book({ title, author, price ,booktype });
         await book.save();
+        console.log(book, "book");
         res.status(201).json(book);
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
 });
+
+
+
+//Display book
+
+router.post('/api/displayBooks', async (req, res) => {
+    try {
+        const book = await Book.find();
+        console.log(book, "book");
+        res.status(201).json(book);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+});
+
 
 // Remove a book
 router.delete('/:id', async (req, res) => {
@@ -75,10 +96,11 @@ router.post('/:id/purchase', async (req, res) => {
 
 });
 
-app.use('/api/books', router);
+app.use('/', router);
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
 
-module.exports = router;
+mongo()
+

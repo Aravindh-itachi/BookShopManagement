@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Invoice</title>
+    <link rel="stylesheet" href="invoice.css">
+    <link rel="license" href="https://www.opensource.org/licenses/mit-license/">
+</head>
+<body>
+    <header>
+        <h1>Invoice</h1>
+        <address id="senderAddress">
+            <p>Jonathan Neal</p>
+            <p>101 E. Chapman Ave<br>Orange, CA 92866</p>
+            <p>(800) 555-1234</p>
+        </address>
+        <span><img alt="" src="http://www.jonathantneal.com/examples/invoice/logo.png"><input type="file" accept="image/*"></span>
+    </header>
+    <article>
+        <h1>Recipient</h1>
+        <address id="recipientAddress">
+            <p>Some Company<br>c/o Some Guy</p>
+        </address>
+        <table class="meta" id="invoiceDetails">
+            <tr>
+                <th><span>Invoice #</span></th>
+                <td><span id="invoiceNumber">101138</span></td>
+            </tr>
+            <tr>
+                <th><span>Date</span></th>
+                <td><span id="invoiceDate">January 1, 2012</span></td>
+            </tr>
+            <tr>
+                <th><span>Amount Due</span></th>
+                <td><span id="amountDue">$600.00</span></td>
+            </tr>
+        </table>
+        <table class="inventory" id="itemsTable">
+            <thead>
+                <tr>
+                    <th><span>Item</span></th>
+                    <th><span>Description</span></th>
+                    <th><span>Rate</span></th>
+                    <th><span>Quantity</span></th>
+                    <th><span>Price</span></th>
+                </tr>
+            </thead>
+            <tbody id="itemsBody">
+                <!-- Items will be dynamically added here -->
+            </tbody>
+        </table>
+        <table class="balance">
+            <tr>
+                <th><span>Total</span></th>
+                <td><span id="total">$0.00</span></td>
+            </tr>
+            <tr>
+                <th><span>Amount Paid</span></th>
+                <td><span id="amountPaid">$0.00</span></td>
+            </tr>
+            <tr>
+                <th><span>Balance Due</span></th>
+                <td><span id="balanceDue">$0.00</span></td>
+            </tr>
+        </table>
+    </article>
+    <aside>
+        <h1><span>Additional Notes</span></h1>
+        <div id="additionalNotes">
+            <p>A finance charge of 1.5% will be made on unpaid balances after 30 days.</p>
+        </div>
+    </aside>
+
+    <script>
+        // Fetch data from API and update the HTML elements
+        fetch('your_api_endpoint')
+            .then(response => response.json())
+            .then(data => {
+                // Update sender address
+                document.getElementById('senderAddress').innerHTML = `
+                    <p>${data.senderName}</p>
+                    <p>${data.senderAddress}</p>
+                    <p>${data.senderPhoneNumber}</p>
+                `;
+                // Update recipient address
+                document.getElementById('recipientAddress').innerHTML = `
+                    <p>${data.recipientName}</p>
+                    <p>${data.recipientAddress}</p>
+                `;
+                // Update invoice details
+                document.getElementById('invoiceNumber').textContent = data.invoiceNumber;
+                document.getElementById('invoiceDate').textContent = data.invoiceDate;
+                document.getElementById('amountDue').textContent = `$${data.amountDue.toFixed(2)}`;
+                
+                // Calculate total price
+                let totalPrice = 0;
+                data.items.forEach(item => {
+                    const price = item.rate * item.quantity;
+                    totalPrice += price;
+                    const row = `
+                        <tr>
+                            <td>${item.name}</td>
+                            <td>${item.description}</td>
+                            <td>$${item.rate.toFixed(2)}</td>
+                            <td>${item.quantity}</td>
+                            <td>$${price.toFixed(2)}</td>
+                        </tr>
+                    `;
+                    document.getElementById('itemsBody').innerHTML += row;
+                });
+
+                // Update total price and balance due
+                document.getElementById('total').textContent = `$${totalPrice.toFixed(2)}`;
+                const balanceDue = totalPrice - data.amountPaid;
+                document.getElementById('balanceDue').textContent = `$${balanceDue.toFixed(2)}`;
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+</body>
+</html>
