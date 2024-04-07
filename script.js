@@ -1,8 +1,5 @@
-
 document.getElementById('addBookForm').addEventListener('submit', addBook);
-document.getElementById('booksContainer').addEventListener('showbook', displayBooks);
-
-
+document.getElementById('showBooksBtn').addEventListener('click', displayBooks);
 
 async function addBook(event) {
     event.preventDefault();
@@ -32,14 +29,12 @@ async function addBook(event) {
 }
 
 
-// document.addEventListener('DOMContentLoaded', () => {
-//     displayBooks();
-//     displayInvoices();
-// });
 
-async function displayBooks() {
-    const booksContainer = document.getElementById('booksContainer');
-    booksContainer.innerHTML = ''; // Clear previous content
+
+async function displayBooks(event) {
+    event.preventDefault();
+    const cartContainer = document.getElementById('cartContainer');
+    cartContainer.innerHTML = ''; // Clear previous content
 
     try {
         const response = await axios.post('http://localhost:3000/api/displayBooks', {
@@ -51,14 +46,16 @@ async function displayBooks() {
         const books = await response.json();
         console.log(books);
         books.forEach(book => {
-            const bookElement = document.createElement('div');
-            bookElement.innerHTML = `
-                <p>Title: ${book.title}</p>
-                <p>Author: ${book.author}</p>
-                <p>Price: $${book.price}</p>
-                <button onclick="purchaseBook('${book._id}')">Purchase</button>
-            `;
-            booksContainer.appendChild(bookElement);
+            var cardContent = `
+//             <div class="cards-content">
+//                 <label>Book Title: ${book.title}</label><br>
+//                 <label>Author: ${book.author}</label><br>
+//                 <label>Price: ${book.price}</label><br>
+//                 <a href="/invoice.html">Bill</a>
+//             </div>
+//             <hr>
+//         `;
+//         container.innerHTML += cardContent;
         });
     } catch (error) {
         console.error('Error:', error);
@@ -105,3 +102,33 @@ async function displayInvoices() {
         console.error('Error:', error);
     }
 }
+
+
+
+// showing Book
+// document.getElementById("showBooksBtn").addEventListener("click", function() {
+//     // Simulating API response (replace with actual API call)
+//     var booksArrayFromAPI = [
+//         { title: "Book 1", author: "Author 1", price: "$10" },
+//         { title: "Book 2", author: "Author 2", price: "$15" },
+//         { title: "Book 3", author: "Author 3", price: "$20" }
+//         // Add more books here if needed
+//     ];
+
+//     var container = document.getElementById("cartContainer");
+//     container.innerHTML = ""; // Clear previous content
+
+//     // Generate cart content based on the number of books received
+//     booksArrayFromAPI.forEach(function(book) {
+//         var cardContent = `
+//             <div class="cards-content">
+//                 <label>Book Title: ${book.title}</label><br>
+//                 <label>Author: ${book.author}</label><br>
+//                 <label>Price: ${book.price}</label><br>
+//                 <a href="/invoice.html">Bill</a>
+//             </div>
+//             <hr>
+//         `;
+//         container.innerHTML += cardContent;
+//     });
+// });
