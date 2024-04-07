@@ -105,6 +105,9 @@ form .form-row .textarea{
   height: 45px!important;
   width: 25%!important;
 }
+.input-data{
+  padding-left: 25px ;
+}
 .submit-btn .input-data .inner{
   height: 100%;
   width: 300%;

@@ -47,15 +47,16 @@ async function displayBooks(event) {
         console.log(books);
         books.forEach(book => {
             var cardContent = `
-//             <div class="cards-content">
-//                 <label>Book Title: ${book.title}</label><br>
-//                 <label>Author: ${book.author}</label><br>
-//                 <label>Price: ${book.price}</label><br>
-//                 <a href="/invoice.html">Bill</a>
-//             </div>
-//             <hr>
-//         `;
-//         container.innerHTML += cardContent;
+            <div class="cards-content">
+            <h1>Book List</h1>
+                <label>Book Title: ${book.title}</label><br>
+                <label>Author: ${book.author}</label><br>
+                <label>Price: ${book.price}</label><br>
+                <a href="/invoice.html">Bill</a>
+            </div>
+            <hr>
+        `;
+            container.innerHTML += cardContent;
         });
     } catch (error) {
         console.error('Error:', error);
